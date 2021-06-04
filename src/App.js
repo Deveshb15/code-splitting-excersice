@@ -1,11 +1,17 @@
 import React, {Component, lazy, Suspense} from 'react'
 import './App.css';
 
+// No code splitting
 import Page1 from './components/Page1'
+// import Page2 from './components/Page2'
+// import Page3 from './components/Page3'
+
+// Async code splitting- cleaner
+// import AsyncComponent from './components/AsyncComponent'
+
+// React.lazy
 const AsyncPage2 = lazy(() => import('./components/Page2'))
 const AsyncPage3 = lazy(() => import('./components/Page3'))
-
-// import AsyncComponent from './components/AsyncComponent'
 
 class App extends Component{
 
@@ -46,23 +52,13 @@ class App extends Component{
   render() {
 
   // No code Splitting 
-  if(this.state.route === 'page1'){
-    return <Page1 onRouteChange={this.onRouteChange} />
-  }
-  else if(this.state.route === 'page2'){
-    return  (
-      <Suspense fallback={<div>Loading...</div>}>
-        <AsyncPage2 onRouteChange={this.onRouteChange} />
-      </Suspense>
-    )
-  }
-  else if(this.state.route === 'page3'){
-    return  (
-      <Suspense fallback={<div>Loading...</div>}>
-        <AsyncPage3 onRouteChange={this.onRouteChange} />
-      </Suspense>
-    )
-  }
+  // if (this.state.route === 'page1') {
+  //   return <Page1 onRouteChange={this.onRouteChange} />
+  // } else if (this.state.route === 'page2') {
+  //   return <Page2 onRouteChange={this.onRouteChange} />
+  // } else {
+  //   return <Page3 onRouteChange={this.onRouteChange} />
+  // }
 
   // Code Splitting 
     // if (this.state.route === 'page1') {
@@ -83,6 +79,25 @@ class App extends Component{
     //   const AsyncPage3 = AsyncComponent(() => import('./components/Page3'))
     //   return  <AsyncPage3 onRouteChange={this.onRouteChange} />
     // }
+
+    // React.lazy
+    if(this.state.route === 'page1'){
+      return <Page1 onRouteChange={this.onRouteChange} />
+    }
+    else if(this.state.route === 'page2'){
+      return  (
+        <Suspense fallback={<div>Loading...</div>}>
+          <AsyncPage2 onRouteChange={this.onRouteChange} />
+        </Suspense>
+      )
+    }
+    else if(this.state.route === 'page3'){
+      return  (
+        <Suspense fallback={<div>Loading...</div>}>
+          <AsyncPage3 onRouteChange={this.onRouteChange} />
+        </Suspense>
+      )
+    }
 
   }
 
